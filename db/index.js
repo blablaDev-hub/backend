@@ -1,12 +1,16 @@
 import mysql from 'mysql';
+import dotenv from 'dotenv';
+
+// init .env
+dotenv.config();
 
 export default class DB {
   constructor() {
     this.conn = mysql.createPool({
-      host: 'localhost',
-      user: 'root',
-      password: 'root',
-      database: 'bbDev',
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
       connectionLimit: 10
     });
   }
