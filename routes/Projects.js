@@ -5,6 +5,9 @@ import {
   gitHub_bbDev,
   checkAuth,
 } from './../middlewares';
+import {
+  addBranchProtection
+} from './../helpers';
 
 const db = new DB();
 const router = express.Router();
@@ -127,11 +130,11 @@ router.post('/start', async (req, res, next) => {
     .createForAuthenticatedUser({
       name: newRepo,
       description: `clone of ${project} for ${user.username}`,
-      private: true
+      private: true,
     })
-    .then(repo => bbDev.migrations.startImport({
-      owner: repo.data.owner.login,
-      repo: repo.data.name,
+    .then(_ => bbDev.migrations.startImport({
+      owner: process.env.GIT_USER,
+      repo: newRepo,
       vcs_url: `https://github.com/blablaDev-hub/${project}`,
       vcs: 'git'
     }))
@@ -165,6 +168,7 @@ router.post('/start', async (req, res, next) => {
           repository: project
         }
       });
+      addBranchProtection(bbDev, newRepo);
     })
     .catch(next);
 });

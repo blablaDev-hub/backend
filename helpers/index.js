@@ -34,3 +34,41 @@ export function decrypt(text) {
 
   return decrypted.toString();
 }
+
+/**
+ * @desc add branch protection
+ * wait till repor is migrated than add
+ * @param {Object} octokit
+ * @param {String} repo
+ */
+export function addBranchProtection(octokit, repo) {
+  let intId = setInterval(async () => {
+
+    const invite = await octokit
+      .migrations
+      .getImportProgress({
+        repo,
+        owner: process.env.GIT_USER
+      });
+
+    if (invite.data.status === 'complete') {
+      octokit
+        .repos
+        .updateBranchProtection({
+          repo,
+          owner: process.env.GIT_USER,
+          branch: 'master',
+          required_pull_request_reviews: {
+            require_code_owner_reviews: true,
+            dismiss_stale_reviews: true,
+            required_approving_review_count: 1
+          },
+          required_status_checks: null,
+          enforce_admins: null,
+          restrictions: null
+        })
+        .catch(console.error)
+      clearInterval(intId);
+    }
+  }, 5000);
+}

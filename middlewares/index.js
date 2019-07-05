@@ -13,7 +13,7 @@ export function gitHub_bbDev(req, res, next) {
     // auth for blablaDev-hub
     const bbDevGitHub = new Octokit({
       auth: process.env.GIT_TOKEN,
-      previews: ['mercy-preview']
+      previews: ['mercy-preview', 'luke-cage-preview']
     });
 
     res.locals.bbDev = bbDevGitHub;
