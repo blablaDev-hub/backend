@@ -1,0 +1,37 @@
+{
+  "name": "bbdev-service",
+  "version": "1.0.0",
+  "description": "bbDev backend service that comunicates with GitHub and database",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node app.js",
+    "build": "babel src --out-dir dist",
+    "node": "node dist/server.js"
+  },
+  "keywords": [
+    "bbDev",
+    "blablaDev",
+    "free code review",
+    "coding hub"
+  ],
+  "author": "bbDev",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/rest": "^16.28.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.1",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "nodemon": "^1.19.1"
+  }
+}
