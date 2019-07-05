@@ -6,11 +6,11 @@ import {
 dotenv.config();
 
 /**
- * @desc authenticate blablaDev-01 user
+ * @desc authenticate blablaDev-hub user
  */
 export function gitHub_bbDev(req, res, next) {
   try {
-    // auth for blablaDev-01
+    // auth for blablaDev-hub
     const bbDevGitHub = new Octokit({
       auth: process.env.GIT_TOKEN,
       previews: ['mercy-preview']
