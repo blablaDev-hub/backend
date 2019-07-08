@@ -1,8 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import DB from './../db';
-
-// import multer from 'multer';
+import multer from 'multer';
 import {
   gitHubUserOAuth,
   checkAuth,
@@ -11,11 +10,22 @@ import {
   encrypt
 } from './../helpers';
 
-// const upload = multer();
-// app.use(upload.any());
-
 const db = new DB();
 const router = express.Router();
+const upload = multer({
+  dest: 'cv/',
+  fileFilter: (req, file, cb) => {
+    const ext = file
+      .originalname
+      .split('.')
+      .pop();
+
+    if (ext == 'pdf' || ext == 'doc' || ext == 'docx') {
+      cb(null, true);
+    }
+    return cb(null, false);
+  }
+});
 dotenv.config();
 
 router.get('/auth/:code', gitHubUserOAuth, (req, res, next) => {
@@ -29,7 +39,6 @@ router.get('/auth/:code', gitHubUserOAuth, (req, res, next) => {
     .users
     .getAuthenticated()
     .then(response => {
-      console.log(response.data);
       const user = {
         github_id: response.data.id,
         username: response.data.login,
@@ -48,7 +57,6 @@ router.get('/auth/:code', gitHubUserOAuth, (req, res, next) => {
       db
         .query(`SELECT * FROM user WHERE github_id=${user.github_id}`)
         .then(rows => {
-          console.log(rows);
           if (rows[0])
             return rows[0];
 
@@ -56,8 +64,6 @@ router.get('/auth/:code', gitHubUserOAuth, (req, res, next) => {
           return db.query(`INSERT INTO user SET ?`, user);
         })
         .then(dbRes => {
-          console.log(dbRes);
-
           const bbDev = encrypt(JSON.stringify({
             g: token,
             i: user.github_id,
@@ -76,6 +82,38 @@ router.get('/auth/:code', gitHubUserOAuth, (req, res, next) => {
         .catch(next);
     })
     .catch(next);
+});
+
+/**
+ * @desc upload CV
+ */
+router.post('/upload_cv', checkAuth, upload.single('cv'), (req, res, next) => {
+  const {
+    file
+  } = req;
+  const {
+    i: id
+  } = res.locals.auth;
+
+  if (file) {
+    const cv = {
+      cv_url: file.path,
+      cv_title: file.originalname
+    };
+
+    db.query(`UPDATE user SET ? WHERE github_id=${id}`, cv);
+    res.send({
+      success: true,
+      data: cv
+    });
+  } else {
+    res
+      .status(403)
+      .send({
+        success: false,
+        reason: 'bad format'
+      });
+  }
 });
 
 /**
