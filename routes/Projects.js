@@ -106,7 +106,7 @@ router.post('/start', upload.none(), async (req, res, next) => {
 
   if (!project) {
     res
-      .status(403)
+      .status(400)
       .send({
         success: false,
         reason: 'project not provided'
@@ -118,7 +118,7 @@ router.post('/start', upload.none(), async (req, res, next) => {
 
   if (!user) {
     res
-      .status(403)
+      .status(400)
       .send({
         success: false,
         reason: 'user not found'

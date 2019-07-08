@@ -28,7 +28,7 @@ const upload = multer({
 });
 dotenv.config();
 
-router.get('/auth/:code', gitHubUserOAuth, (req, res, next) => {
+router.post('/auth', upload.none(), gitHubUserOAuth, (req, res, next) => {
   let didInsert = false;
   const {
     token,
@@ -87,7 +87,7 @@ router.get('/auth/:code', gitHubUserOAuth, (req, res, next) => {
 /**
  * @desc upload CV
  */
-router.post('/upload_cv', checkAuth, upload.single('cv'), (req, res, next) => {
+router.patch('/upload_cv', checkAuth, upload.single('cv'), (req, res, next) => {
   const {
     file
   } = req;
@@ -108,7 +108,7 @@ router.post('/upload_cv', checkAuth, upload.single('cv'), (req, res, next) => {
     });
   } else {
     res
-      .status(403)
+      .status(415)
       .send({
         success: false,
         reason: 'bad format'
@@ -167,7 +167,7 @@ router.get('/get_projects', checkAuth, (req, res, next) => {
 /**
  * @desc log out user, expire cookie
  */
-router.get('/logout', checkAuth, (req, res, next) => {
+router.delete('/logout', checkAuth, (req, res, next) => {
   res.cookie('bbDev', {
     expires: Date.now(0)
   });

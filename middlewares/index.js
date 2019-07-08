@@ -30,7 +30,14 @@ export function gitHub_bbDev(req, res, next) {
 export function gitHubUserOAuth(req, res, next) {
   const {
     code
-  } = req.params;
+  } = req.body;
+
+  if (!code) {
+    const err = new Error('no code');
+    err.status = 401;
+    return next(err);
+  }
+
   const octo = new Octokit({});
   octo.registerEndpoints({
     login: {
@@ -86,8 +93,8 @@ export function checkAuth(req, res, next) {
     bbDev
   } = req.cookies;
   if (!bbDev) {
-    const err = new Error('no_auth');
-    err.status = 400;
+    const err = new Error('no auth');
+    err.status = 401;
     return next(err);
   }
 
