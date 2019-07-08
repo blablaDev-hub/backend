@@ -43,7 +43,6 @@ export function decrypt(text) {
  */
 export function addBranchProtection(octokit, repo) {
   let intId = setInterval(async () => {
-
     const invite = await octokit
       .migrations
       .getImportProgress({
@@ -67,7 +66,7 @@ export function addBranchProtection(octokit, repo) {
           enforce_admins: null,
           restrictions: null
         })
-        .catch(console.error)
+        .catch(console.error);
       clearInterval(intId);
     }
   }, 5000);
