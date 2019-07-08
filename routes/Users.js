@@ -81,7 +81,7 @@ router.get('/auth/:code', gitHubUserOAuth, (req, res, next) => {
 /**
  * @desc check user invites
  */
-router.get('/check_invite', checkAuth, (req, res, next) => {
+router.get('/check_invites', checkAuth, (req, res, next) => {
   const {
     userGitHub
   } = res.locals.auth;
