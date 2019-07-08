@@ -1,11 +1,11 @@
 {
-  "name": "bbdev-service",
+  "name": "bbdev-backend",
   "version": "1.0.0",
   "description": "bbDev backend service that comunicates with GitHub and database",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node app.js",
+    "start": "nodemon --exec babel-node src/app.js",
     "build": "babel src --out-dir dist",
     "node": "node dist/server.js"
   },
@@ -15,7 +15,7 @@
     "free code review",
     "coding hub"
   ],
-  "author": "bbDev",
+  "author": "blablaDev-hub",
   "license": "ISC",
   "dependencies": {
     "@octokit/rest": "^16.28.1",
