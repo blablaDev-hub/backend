@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import multer from "multer";
+import multer from 'multer';
 import DB from './../db';
 import {
   gitHub_bbDev,
@@ -132,7 +132,7 @@ router.post('/start', upload.none(), async (req, res, next) => {
     .createForAuthenticatedUser({
       name: newRepo,
       description: `clone of ${project} for ${user.username}`,
-      private: true,
+      private: true
     })
     .then(_ => bbDev.migrations.startImport({
       owner: process.env.GIT_USER,
