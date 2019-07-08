@@ -48,7 +48,10 @@ router.get('/', (req, res, next) => {
         };
       })))
     .then(values => {
-      res.send(values);
+      res.send({
+        success: true,
+        data: values
+      });
     })
     .catch(next);
 });
@@ -79,10 +82,13 @@ router.get('/readme/:repo', (req, res, next) => {
       path: 'README.md'
     })
     .then(readme => res.send({
-      name: readme.data.name,
-      download_url: readme.data.download_url,
-      content: readme.data.content,
-      encoding: readme.data.encoding
+      success: true,
+      data: {
+        name: readme.data.name,
+        download_url: readme.data.download_url,
+        content: readme.data.content,
+        encoding: readme.data.encoding
+      }
     }))
     .catch(next);
 });
@@ -146,7 +152,6 @@ router.post('/start', upload.none(), async (req, res, next) => {
       permission: 'pull'
     }))
     .then(invite => {
-
       const project = {
         user_id: user.github_id,
         github_id: invite.data.repository.id,

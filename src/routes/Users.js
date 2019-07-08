@@ -140,7 +140,10 @@ router.get('/check_invites', checkAuth, (req, res, next) => {
             description: i.repository.description
           }
         }));
-      res.send(bbDevInvites);
+      res.send({
+        success: true,
+        data: bbDevInvites
+      });
     })
     .catch(next);
 });
