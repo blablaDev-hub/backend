@@ -15,7 +15,7 @@
     "free code review",
     "coding hub"
   ],
-  "author": "blablaDev-hub",
+  "author": "blablaDev <bla@blabladev.com> (https://blabladev.com/)",
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.5.1",
