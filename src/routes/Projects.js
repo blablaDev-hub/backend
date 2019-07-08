@@ -48,7 +48,6 @@ router.get('/', (req, res, next) => {
         };
       })))
     .then(values => {
-      console.log(values);
       res.send(values);
     })
     .catch(next);
@@ -147,7 +146,6 @@ router.post('/start', upload.none(), async (req, res, next) => {
       permission: 'pull'
     }))
     .then(invite => {
-      console.log(invite);
 
       const project = {
         user_id: user.github_id,
