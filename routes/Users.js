@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import DB from './../db';
 import multer from 'multer';
+import DB from './../db';
 import {
   gitHubUserOAuth,
   checkAuth,
