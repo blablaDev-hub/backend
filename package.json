@@ -1,10 +1,9 @@
 {
   "name": "bbdev-backend",
   "version": "1.0.0",
-  "description": "bbDev backend service that comunicates with GitHub and database",
+  "description": "bbDev backend API that comunicates with GitHub and database",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec babel-node src/app.js",
     "build": "babel src --out-dir dist",
     "prod": "pm2 start dist/app.js --name bbDev-api -i -1"
