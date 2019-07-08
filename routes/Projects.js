@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import multer from "multer";
 import DB from './../db';
 import {
   gitHub_bbDev,
@@ -11,6 +12,7 @@ import {
 
 const db = new DB();
 const router = express.Router();
+const upload = multer();
 router.use(checkAuth);
 router.use(gitHub_bbDev);
 dotenv.config();
@@ -93,7 +95,7 @@ router.get('/readme/:repo', (req, res, next) => {
  * set user as colaborator
  * @param {String} project
  */
-router.post('/start', async (req, res, next) => {
+router.post('/start', upload.none(), async (req, res, next) => {
   const {
     bbDev,
     auth,

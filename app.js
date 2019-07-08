@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import routes from './routes';
@@ -8,7 +7,6 @@ import routes from './routes';
 dotenv.config();
 
 const app = express();
-app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(routes);
 
