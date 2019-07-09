@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node src/app.js",
     "build": "babel src --out-dir dist",
-    "prod": "pm2 start dist/app.js --name bbDev-api -i -1"
+    "prod": "pm2 start dist/app.js --name bbDev-api -i max"
   },
   "keywords": [
     "bbDev",
