@@ -94,7 +94,6 @@ router.post('/auth', upload.none(), gitHubUserOAuth, (req, res, next) => {
  */
 router.get('/check_session', checkAuth, (req, res, next) => {
   const { i: id } = res.locals.auth;
-  console.log(id);
 
   db
   .query(`SELECT * FROM user WHERE github_id=${id}`)
