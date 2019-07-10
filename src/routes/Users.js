@@ -74,7 +74,7 @@ router.post('/auth', upload.none(), gitHubUserOAuth, (req, res, next) => {
             t: 'dev'
           }));
           res.cookie('bbDev', bbDev, {
-            maxAge: 30 * 24 * 60 * 60 * 1000
+            maxAge: 15 * 24 * 60 * 60 * 1000
           });
           res.send({
             success: true,

@@ -98,6 +98,10 @@ export function checkAuth(req, res, next) {
     return next(err);
   }
 
+  res.cookie('bbDev', bbDev, {
+    maxAge: 30 * 24 * 60 * 60 * 1000
+  });
+
   const decoded = JSON.parse(decrypt(bbDev));
   res.locals.auth = {
     userGitHub: new Octokit({
