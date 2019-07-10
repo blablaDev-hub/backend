@@ -28,6 +28,10 @@ const upload = multer({
 });
 dotenv.config();
 
+/**
+ * @desc authenticate user with code from github
+ * if user is comming first time, store it in DB
+ */
 router.post('/auth', upload.none(), gitHubUserOAuth, (req, res, next) => {
   let didInsert = false;
   const {
