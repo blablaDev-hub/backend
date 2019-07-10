@@ -89,6 +89,26 @@ router.post('/auth', upload.none(), gitHubUserOAuth, (req, res, next) => {
 });
 
 /**
+ * @desc check user session
+ * if valid return user
+ */
+router.get('/check_session', checkAuth, (req, res, next) => {
+  const { i: id } = res.locals.auth;
+  console.log(id);
+
+  db
+  .query(`SELECT * FROM user WHERE github_id=${id}`)
+  .then(dbRes => {
+    const [user] = dbRes;
+    res.send({
+      success: true,
+      data: user
+    })
+  })
+  .catch(next)
+})
+
+/**
  * @desc upload CV
  */
 router.patch('/upload_cv', checkAuth, upload.single('cv'), (req, res, next) => {
