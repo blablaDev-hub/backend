@@ -194,9 +194,7 @@ router.get('/get_projects', checkAuth, (req, res, next) => {
  * @desc log out user, expire cookie
  */
 router.delete('/logout', checkAuth, (req, res, next) => {
-  res.cookie('bbDev', {
-    expires: Date.now(0)
-  });
+  res.clearCookie('bbDev');
   res.send({
     success: true
   });

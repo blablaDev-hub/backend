@@ -92,6 +92,7 @@ export function checkAuth(req, res, next) {
   const {
     bbDev
   } = req.cookies;
+
   if (!bbDev) {
     const err = new Error('no auth');
     err.status = 401;
