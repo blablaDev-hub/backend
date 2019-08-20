@@ -142,7 +142,7 @@ router.patch('/upload_cv', checkAuth, upload.single('cv'), (req, res, next) => {
 /**
  * @desc check user invites
  */
-router.get('/check_invites', checkAuth, (req, res, next) => {
+router.get('/get_invites', checkAuth, (req, res, next) => {
   const {
     userGitHub
   } = res.locals.auth;
