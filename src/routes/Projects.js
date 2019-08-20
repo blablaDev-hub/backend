@@ -153,26 +153,40 @@ router.post('/start', upload.none(), async (req, res, next) => {
     }))
     .then(invite => {
       const project = {
-        user_id: user.github_id,
-        github_id: invite.data.repository.id,
-        start: new Date(),
+        description: invite.data.repository.description,
         end: null,
+        github_id: invite.data.repository.id,
+        html_url: invite.data.repository.html_url,
+        name: invite.data.repository.name,
         points: 0,
         review: '',
-        name: invite.data.repository.name,
-        description: invite.data.repository.description,
-        html_url: invite.data.repository.html_url,
-        review_count: 0
+        review_count: 0,
+        start: new Date(),
+        user_id: user.github_id,
       };
 
-      db.query(`INSERT INTO project SET ?`, project);
-      res.send({
-        success: true,
-        data: {
-          invite_id: invite.data.id,
-          repository: project
-        }
-      });
+      db
+        .query(`INSERT INTO project SET ?`, project)
+        .then(dbRes => {
+          project.id = dbRes.insertId;
+
+          res.send({
+            success: true,
+            data: {
+              project,
+              invite: {
+                id: invite.data.id,
+                repository: {
+                  description: project.description,
+                  html_url: project.html_url,
+                  id: project.github_id,
+                  name: project.name,
+                }
+              }
+            }
+          });
+        })
+
       addBranchProtection(bbDev, newRepo);
     })
     .catch(next);
