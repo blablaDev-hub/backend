@@ -184,8 +184,8 @@ router.post('/start', upload.none(), async (req, res, next) => {
  */
 router.get('/accept_invite/:invitation_id', (req, res, next) => {
   const {
-    bbDev
-  } = res.locals;
+    userGitHub
+  } = res.locals.auth;
   const {
     invitation_id
   } = req.params;
@@ -197,7 +197,7 @@ router.get('/accept_invite/:invitation_id', (req, res, next) => {
     return;
   }
 
-  bbDev
+  userGitHub
     .repos
     .acceptInvitation({
       invitation_id
