@@ -37,7 +37,7 @@ export function decrypt(text) {
 
 /**
  * @desc add branch protection
- * wait till repor is migrated than add
+ * wait till repo is migrated then add
  * @param {Object} octokit
  * @param {String} repo
  */
